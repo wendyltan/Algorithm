@@ -1,61 +1,39 @@
 import java.util.Random;
 
 public class QuickSort {
-    public static void sort(int[] a) {
-        shuffle(a);
-        sort(a, 0, a.length - 1);
-        Helper.print(a);
-    }
-
-    //打乱数组元素
-    private static void shuffle(int[] ar) {
-        Random rnd = new Random();
-        for (int i = ar.length - 1; i > 0; i--) {
-            int index = rnd.nextInt(i + 1);
-            // Simple swap
-            int a = ar[index];
-            ar[index] = ar[i];
-            ar[i] = a;
+    public static void main(String[] args) {
+        int [] arr = {8,1,0,4,6,2,7,9,5,3};
+        quickSort(arr,0,arr.length-1);
+        for(int i :arr){
+            System.out.print(i+" ");
         }
-
     }
-
-    private static void sort(int[] a, int lo, int hi) {
-        if (hi <= lo) return;
-        int j = partition(a, lo, hi);
-        sort(a, lo, j - 1);
-        sort(a, j + 1, hi);
-    }
-    //切分
-    private static int partition(int[] a, int lo, int hi) {
-        int i = lo, j = hi + 1;
-        int v = a[lo];
-        while (true) {
-            //找到第一个大于等于它的元素（左向右扫描
-            while (Helper.less(a[++i], v)) if (i == hi) break;
-            //找到第一个小于等于它的元素（右向左扫描
-            while (Helper.less(v, a[--j])) if (j == lo) break;
-            if (i >= j) break;
-            //交换两个的位置
-            Helper.exch(a, i, j);
+    public static void quickSort(int[]arr,int low,int high){
+        if (low < high) {
+            int middle = getMiddle(arr, low, high);
+            quickSort(arr, low, middle - 1);
+            quickSort(arr, middle + 1, high);
         }
-        //当两个指针相遇时，将切分元素 a[lo] 和 a[j] 交换位置。
-        Helper.exch(a, lo, j);
-        return j;
     }
-
-    //使用三向切分的排序
-    public static void sortThree(int[] a, int lo, int hi) {
-        if (hi <= lo) return;
-        int lt = lo, i = lo + 1, gt = hi;
-        int  v = a[lo];
-        while (i <= gt) {
-            if (Helper.less(a[i],v)) Helper.exch(a, lt++, i++);
-            else if (!Helper.less(a[i],v)) Helper.exch(a, i, gt--);
-            else i++;
+    public static int getMiddle(int[] list, int low, int high) {
+        int tmp = list[low];
+        while (low < high) {
+            /**
+             * 从high开始向前扫描到第一个比tmp小的值与tmp交换。
+             * 从low向后扫描第一比tmp大的值与tmp交换。
+             * 重复①②过程只到，high=low完成一次快速排序，然后递归子序列。
+             */
+            while (low < high && list[high] >= tmp) {
+                high--;
+            }
+            list[low] = list[high];
+            while (low < high && list[low] <= tmp) {
+                low++;
+            }
+            list[high] = list[low];
         }
-        sortThree(a, lo, lt - 1);
-        sortThree(a, gt + 1, hi);
+        list[low] = tmp;
+        return low;
     }
 
 
