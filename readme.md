@@ -1,3 +1,3 @@
-# Algorithm
+# DataStructure
 
-总结一些常用的排序算法
+总结一些常用数据结构和算法
