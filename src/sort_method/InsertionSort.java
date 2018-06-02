@@ -1,3 +1,5 @@
+package sort_method;
+
 public class InsertionSort {
     //直接插入排序(比较一个后移一个）
     public static void insertSort(int a[]){

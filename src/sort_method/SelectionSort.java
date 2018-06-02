@@ -1,3 +1,5 @@
+package sort_method;
+
 public class SelectionSort {
     public static void main(String[] args) {
         int[] number = {3,1,2,8,4,5,24,12};

@@ -1,3 +1,5 @@
+package sort_method;
+
 public class BubbleSort {
     public static void main(String[] args) {
         int[] number = {95,45,15,78,84,51,24,12};

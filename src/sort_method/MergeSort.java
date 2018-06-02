@@ -1,3 +1,5 @@
+package sort_method;
+
 public class MergeSort {
     public static void main(String[] args) {
         int [] arr ={6,5,3,1,8,7,2,4};
