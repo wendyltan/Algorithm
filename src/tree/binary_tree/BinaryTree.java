@@ -1,4 +1,4 @@
-package tree;
+package tree.binary_tree;
 
 import java.util.LinkedList;
 
@@ -465,13 +465,13 @@ public class BinaryTree<E> {
     }
 
     /**
-     * Tell whether two tree equals according to root node
+     * Tell whether two trees according to root node
      * @param src
      * @param des
      * @return
      */
     private boolean equals0(Node<E> src, Node<E> des) {
-        if (src == null && des == null) { // empty tree equals
+        if (src == null && des == null) { // empty trees
             return true;
         } else if (src == null || des == null) { // empty and non-empty tree not equal
             return false;

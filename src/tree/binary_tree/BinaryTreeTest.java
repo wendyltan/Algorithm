@@ -1,4 +1,4 @@
-package tree;
+package tree.binary_tree;
 
 public class BinaryTreeTest {
     public static void main(String[] args) {
@@ -33,8 +33,8 @@ public class BinaryTreeTest {
         BinaryTree<Character> tree2 = new BinaryTree<Character>(tree.getRoot());
         System.out.println("tree为 ： " + tree.printBinaryTree(tree.getRoot()));
         System.out.println("复制tree为tree2 ： " + tree2.printBinaryTree(tree2.getRoot()));
-        // 判断 tree2 与 tree 是否相等
-        System.out.println("tree2 与 tree 是否相等: " + tree.equals(tree2));
+        // 判断 tree2 与 tree.binary_search_tree.binary_tree 是否相等
+        System.out.println("tree2 与 tree.binary_search_tree.binary_tree 是否相等: " + tree.equals(tree2));
         System.out.println("\n----------------------------------------------\n");
 
         // 构建tree1
@@ -42,8 +42,8 @@ public class BinaryTreeTest {
         tree1.createBinaryTree("A(B(D,E(G(I,J),)),C(F(,H(,K)),))");
         System.out.println("tree为 ： " + tree.printBinaryTree(tree.getRoot()));
         System.out.println("构建tree1为 ： " + tree1.printBinaryTree(tree1.getRoot()));
-        // 判断 tree1 与 tree 是否相等
-        System.out.println("tree1 与 tree 是否相等: " + tree.equals(tree1));
+        // 判断 tree1 与 tree.binary_search_tree.binary_tree 是否相等
+        System.out.println("tree1 与 tree.binary_search_tree.binary_tree 是否相等: " + tree.equals(tree1));
         System.out.println("\n----------------------------------------------\n");
 
         // 根据前序遍历创建树
