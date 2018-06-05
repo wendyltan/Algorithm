@@ -11,28 +11,31 @@ public class BinarySearchTree {
     private void createBinarySearchTree(int[] input) {
         if (input!=null){
             for (int i=0;i<input.length;i++){
-                root = insert(input[i],root);
+                insert(new Node(input[i]));
             }
         }
     }
 
-    public Node insert(int target, Node node) {
-        if (search(target,node) == null){
-            //can't find any node the same,insert this new node
-            if (node==null){
-                //root node
-                return new Node(target);
+    public void insert(Node node) {
+        Node y = null;
+        Node x = root;
+        while (x!=null){
+            y = x;
+            if (node.data<x.data){
+                x = x.left;
             }else{
-                if (target<node.data){
-                    //recursively insert into left tree
-                    node.left = insert(target,node.left);
-                }else{
-                    //recursively insert into right tree
-                    node.right = insert(target,node.right);
-                }
+                x = x.right;
             }
+            node.parent = y;
+
         }
-        return node;
+        if (y==null){
+            root = node;
+        }else if (node.data<y.data){
+            y.left = node;
+        }else{
+            y.right = node;
+        }
     }
 
     public Node search(int target,Node root){
@@ -52,39 +55,47 @@ public class BinarySearchTree {
         return result;
     }
 
-    public Node remove(int target,Node node){
-        Node tmp = null;
-        if (node!=null){
-            if (target<node.data){
-                //delete from left tree
-                node.left = remove(target,node.left);
-            }else if (target>node.data){
-                //delete from right tree
-                node.right = remove(target,node.right);
-            }else if(node.left!=null&&node.right!=null){
-                //find target and its' left and right tree are not empty
-
-                //find its' right tree's min node.that is,the successor
-                tmp = node.right;
-                while (tmp.left!=null){
-                    tmp = tmp.left;
-                }
-
-                node.data = tmp.data;
-
-                //recursively delete the original node that has replace the current node
-                node.right = remove(node.data,node.right);
-
-            }else{
-                if (node.left==null){
-                    node = node.right;
-                }else{
-                    node = node.left;
-                }
-            }
-        }
-        return node;
+    public void remove(Node node){
+        Node tmp =null;
+       if (node.left==null){
+           //left tree is null
+           //replace node with right tree
+           transplant(node,node.right);
+       }else if (node.right==null){
+           //right tree is null
+           transplant(node,node.left);
+       }else{
+           //have both left and right tree
+           //find node's successor!
+           tmp = getMinimum(node.right);
+           if (tmp.parent!=node){
+                //if the successor is not right child
+               transplant(tmp,tmp.right);
+               tmp.right = node.right;
+               tmp.right.parent = tmp;
+           }else{
+               //simply replace node with successor
+               transplant(node,tmp);
+               tmp.left = node.left;
+               tmp.left.parent = tmp;
+           }
+       }
     }
+
+    public void transplant(Node u,Node v){
+        if (u.parent==null){
+            this.root = v;
+        }else if (u==u.parent.left){
+            u.parent.left = v;
+        }else{
+            u.parent.right = v;
+        }
+        if (v!=null){
+            v.parent = u.parent;
+        }
+    }
+
+
 
     public void inOrder(Node node) {
         if (node != null) {
@@ -96,6 +107,58 @@ public class BinarySearchTree {
 
     public Node getRoot() {
         return root;
+    }
+
+    public Node getMinimum(Node node){
+        while (node.left!=null){
+            node = node.left;
+        }
+        return node;
+    }
+
+    public Node getMaximum(Node node){
+        while (node.right!=null){
+            node = node.right;
+        }
+        return node;
+    }
+
+    public Node getPredecessor(Node node){
+        Node tmp = null;
+        if (node!=null){
+            //have left tree,find biggest in left tree
+            if (node.left!=null){
+                tmp = getMaximum(node.left);
+            }else{
+                //don't have left tree. follow tree up until find a node which is its' parent's right node
+                tmp = node.parent;
+                while (tmp!=null && node==tmp.left){
+                    node = tmp;
+                    tmp = tmp.parent;
+                }
+
+            }
+        }
+        return tmp;
+    }
+
+    public Node getSuccessor(Node node){
+        Node tmp = null;
+        if (node!=null){
+            //have right tree,find smallest in right tree
+            if (node.right!=null){
+                tmp = getMinimum(node.right);
+            }else{
+                //don't have right tree. follow tree up until find a node which is its' parent's left node
+                tmp = node.parent;
+                while (tmp!=null && node==tmp.right){
+                    node = tmp;
+                    tmp = tmp.parent;
+                }
+
+            }
+        }
+        return tmp;
     }
 
     public void printTree(Node node) {
