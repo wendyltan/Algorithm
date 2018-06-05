@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestHash {
+    /**
+     * Contains leetcode problems solution.
+     * @param args
+     */
     public static void main(String[] args){
         int[] a = {2,3,4,6};
         for(int i :twoSum(a,5)){
@@ -13,6 +17,10 @@ public class TestHash {
 
         int[] b = {2,3,4,6,2,2,3};
         System.out.println(findLHS(b));
+
+        int[] c = {100, 4, 200, 1, 3, 2};
+        //1,2,3,4
+        System.out.println(longestConsecutive(c));
     }
 
     /**
@@ -53,4 +61,43 @@ public class TestHash {
         }
         return result;
     }
+
+    /**
+     * Longest consecutive elements sequence's length
+     * Given [100, 4, 200, 1, 3, 2],
+     * The longest consecutive elements sequence is [1, 2, 3, 4].
+     * Return its length: 4.
+     * @param nums
+     * @return
+     */
+
+    public static int longestConsecutive(int[] nums){
+        Map<Integer,Integer> numCnts = new HashMap<>();
+        for (int num:nums){
+            numCnts.put(num,1);
+        }
+        for (int num :nums){
+            count(numCnts,num);
+        }
+        int max = 0;
+        for (int num:nums){
+            max = Math.max(max,numCnts.get(num));
+            System.out.println(num+" "+numCnts.get(num));
+        }
+        return max;
+    }
+
+    private static int count(Map<Integer,Integer> numCnts, int num) {
+        if (!numCnts.containsKey(num)){
+            return 0;
+        }
+        int cnt = numCnts.get(num);
+        if (cnt>1){
+            return cnt;
+        }
+        cnt = count(numCnts,num+1) +1;
+        numCnts.put(num,cnt);
+        return cnt;
+    }
+
 }

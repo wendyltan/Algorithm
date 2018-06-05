@@ -5,6 +5,10 @@ import java.util.Map;
 import java.util.Stack;
 
 public class TestStack {
+    /**
+     * Contains leecode problems solution
+     * @param args
+     */
     public static void main(String[] args){
         QueueStack queueStack = new QueueStack();
         queueStack.push(1);
